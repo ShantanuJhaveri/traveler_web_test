@@ -244,6 +244,93 @@ export const PopboxTypeEnum = {
   ERROR: 'error'
 };
 
+export const positionChartOption = {
+  type: 'scatter',
+  data: {
+    datasets: [
+      {
+        label: 'Position',
+        yAxisID: 'shear',
+        data: []
+      }
+    ]
+    
+  },
+
+  
+  options: {
+      title: {
+        display: true,
+        text: "Distance between Flag A and B",
+        fontStyle: "bold"
+      },
+      responsive: true,
+      maintainAspectRatio: false,
+      // chartArea: { backgroundColor: '#FFF' },
+      legend: { display: false },
+      elements: {
+        point: {
+          radius: 6,
+          hoverRadius: 6,
+          borderWidth: 0,
+          hoverBorderWidth: 0,
+          backgroundColor(context) {
+            const { dataIndex, dataset } = context;
+            const point = dataset.data[dataIndex];
+            return locationColors[point.index];
+          }
+        }
+      },
+      // Disable all animations
+      animation: {
+        duration: 0
+      },
+      hover: {
+        animationDuration: 0
+      },
+      onHover: null as any,
+      responsiveAnimationDuration: 0,
+      scales: {
+        xAxes: [{
+          type: 'linear',
+          position: 'bottom',
+          scaleLabel: {
+            display: false,
+            labelString: 'Distance from flag A to B'
+          },
+          ticks: {
+            min: 0,
+            max: 1,
+            stepSize: 0.1
+          }
+      }],
+      yAxes: [{
+        display: false,
+        position: 'left',
+        id: 'shear',
+        scaleLabel: {
+          display: true,
+          labelString: 'Strength (N)'
+        },
+        ticks: {
+          min: 0,
+          max: 0
+        }
+      }],
+    },
+    tooltips: {
+      callbacks: {
+          label: function(tooltipItem, data) {
+            const { datasetIndex, index } = tooltipItem;
+            const rawData = data.datasets[datasetIndex].data[index];
+            const { x, y, rowIndex } = rawData;
+            return `(${x.toFixed(2)}, ${y.toFixed(2)})`;
+          }
+      }
+    }
+  }
+}
+
 export const shearChartOption = {
   type: 'scatter',
   data: {
@@ -610,7 +697,7 @@ export const LONGITUDE_RANGE =  [-106.30, -106.20];
 export const countdownDuration = 10;
 
 // Multiple choice options for robot trust questions in final survey
-export const robotAgreeDisagreeOptions = ["Highly disagree", "Moderately disagree", "Somewhat disagree", "Unsure", "Somewhat agree", "Moderately agree", "Highly agree"];
+export const robotAgreeDisagreeOptions = ["I did NOT report this belief", "Highly disagree", "Moderately disagree", "Somewhat disagree", "Unsure", "Somewhat agree", "Moderately agree", "Highly agree"];
 
 // Multiple choice options for robot trust questions in final survey
 export const robotTrustOptions = ["Not at all", "Low", "Slightly", "Neutral", "Moderately", "Very", "Extremely", "N/A to this robot", 

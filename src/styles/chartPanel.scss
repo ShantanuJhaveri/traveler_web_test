@@ -57,9 +57,10 @@
                 }
             }
         }
+       
         .chartsArea {
             height: calc(100% - 160px);
-            width: 100%;
+            // width: 100%;
             .chartEvenlyDistributed {
                 width: 100%;
                 height: 25%;
@@ -81,6 +82,7 @@
                 height: 0%;
                 position: relative;
             }
+            
         }
         .optionsPanel {
             height: calc(100% - 40px);
@@ -213,6 +215,23 @@
 
     .chartPanelFullSize {
         height: calc(100vh - 60px);
+    }
+    .chartPanelMin {
+        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+        width: 100%;
+        .labels{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: normal;
+            align-content: stretch;
+            .flagA{
+                font-size: 15px;
+            }
+            .flagB{
+                font-size: 15px;
+            }
+        }
     }
 }
 

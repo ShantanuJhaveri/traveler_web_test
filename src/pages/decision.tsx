@@ -17,6 +17,8 @@ import {
 } from '../constants';
 import { useStateValue, Action } from '../state';
 import ChartPanel from '../components/ChartPanel';
+import PositionChart from '../components/PositionChart';
+
 import "../styles/decision.scss";
 import { CurrUserStepData, UserStepsData, Sample, PreSample } from '../types';
 import { initializeCharts } from '../handlers/ChartHandler';
@@ -166,7 +168,13 @@ export default function Main() {
   }
 
   let objectiveOptionsLinked = objectiveOptions.map((obj, i) => {
-    if (i === 1) {
+    if (i === 0) {
+      return (
+        <span>
+            There are areas along the transect where data is needed
+        </span>
+      );
+    } else if (i === 1) {
       return (
         <span>
             There is a discrepancy between the strength data and the <span style={{color: 'blue', textDecorationLine: 'underline', cursor: 'pointer'}}><strong><a onClick={() => setHypothesisOpen(true)}>strength hypothesis</a></strong></span> that needs additional evaluation
@@ -749,14 +757,19 @@ export default function Main() {
   }
 
   // Right panel to display when collecting data, sampleState != FINISH_TRANSECT
+  // RIGHT PANEL ATTRIBUTES
   const collectionRightPanel = (
     <div className="collectionRightPanel">
       <ImgAlert open={!!showImgAlert} />
       <Tooltip title={userFeedbackState !== UserFeedbackState.TYPE_IN_NEW_LOCATION_DATA ? "" : <span style={clickableImageTipStyle}>{clickableImageTip}</span>} placement="bottom">
-          <div className="clickableImageContainer">
-            <ClickableImage width={750} enabled={imgClickEnabled} addDataFunc={() => addDataToPlot()} setPopOver={setImgAlert} />  
-          </div>
+        <PositionChart />
+          {/* <div className="clickableImageContainer"> */}
+            {/* <ClickableImage width={750} enabled={imgClickEnabled} addDataFunc={() => addDataToPlot()} setPopOver={setImgAlert} />   */}
+          {/* </div> */}
       </Tooltip>
+
+
+      
       {!loadingRobotSuggestions && <div className={numSubmitClicks === 0 ? "user-feedback-flashing" : "user-feedback"}>
         {userFeedbackStateMap[userFeedbackState]}
         <div className="submit-user-feedback-button">

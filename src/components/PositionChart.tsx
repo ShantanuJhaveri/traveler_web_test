@@ -26,12 +26,13 @@ const chartClassMap: { [key in ChartPanelMode]: string[][] } = {
   ],
 };
 
-interface ChartPanelProps {
+interface PositionChartProps {
   mode: ChartPanelMode;
   fullSize?: boolean;
 }
 
-export default function ChartPanel(props: ChartPanelProps) {
+export default function PositionChart() {
+  // props: PositionChartProps
   const [globalState, dispatch] = useStateValue();
   const { chartSettings } = globalState;
   const [currentTab, setCurrentTab] = useState(0);
@@ -104,60 +105,38 @@ export default function ChartPanel(props: ChartPanelProps) {
   const chartIDSuffix = "";
 
   let tab = currentTab;
-  if (tab >= chartClassMap[props.mode].length || tab < 0) {
-    setCurrentTab(0);
-    tab = 0;
-  }
 
   return (
     <div className={`chartPanelContainer`}>
-      <div
-        className={`chartPanel ${props.fullSize ? "chartPanelFullSize" : ""}`}
-      >
+      <div className={`chartPanel chartPanelMin`}>
         {showOptions && optionsPanel}
         <div
           style={{ height: "100%", display: showOptions ? "none" : "block" }}
         >
           <div className="chartTabs">
-            {chartTabMap[props.mode].map((text, i) => (
-              <div
-                key={i}
-                className={`chartTab ${tab === i && "chartTabSelected"}`}
-                onClick={() => setCurrentTab(i)}
-              >
-                {text}
-              </div>
-            ))}
+            <div
+              className={`chartTab chartTabSelected`}
+              //   onClick={() => setCurrentTab(i)}
+            >
+              Location Visualizaer
+            </div>
           </div>
-          <ChartOptionsSummary
+
+          {/* <ChartOptionsSummary
             displayOption={displayOption}
             onOptionsClick={() => setShowOptions(true)}
-          />
-          <div className="chartsArea">
-            <div
-              className={chartClassMap[props.mode][tab][0]}
-              id="shearMoistChartParent"
-            >
-              <canvas id={`shearMoistChart${chartIDSuffix}`} />
+          /> */}
+          {/* create an inline flex box */}
+          <div className="chartArea">
+            <div className="chartFull" id="positionChartParent">
+              <canvas id={`positionChart${chartIDSuffix}`} />
             </div>
-            <div
-              className={chartClassMap[props.mode][tab][1]}
-              id="shearChartParent"
-            >
-              <canvas id={`shearChart${chartIDSuffix}`} />
+            <div className="labels">
+              <div className="flagA">A</div>
+              <div className="flagB">B</div>
             </div>
-            <div
-              className={chartClassMap[props.mode][tab][2]}
-              id="moistChartParent"
-            >
-              <canvas id={`moistChart${chartIDSuffix}`} />
-            </div>
-            <div
-              className={chartClassMap[props.mode][tab][3]}
-              id="grainChartParent"
-            >
-              <canvas id={`grainChart${chartIDSuffix}`} />
-            </div>
+
+            {/* <span>Flag B</span> */}
           </div>
         </div>
       </div>
